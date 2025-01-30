@@ -85,7 +85,8 @@ const Login = ({ navigation }) => {
         },
       ]);
     } else {
-      navigation.navigate('BottomNav');
+      // navigation.navigate('BottomNav');
+			console.log('Todo bien');
     }
     setIsLoggingIn(false);
   }

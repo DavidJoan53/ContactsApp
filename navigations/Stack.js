@@ -5,17 +5,17 @@ import Login from '../screens/Login';
 import Home from '../screens/Home';
 // @import Context
 import { useAuth } from '../contexts/Auth';
-// TODO: Crete the new context to Sync contactss
+// TODO: Crete the new context to Sync contacts
 
 const Stack = createNativeStackNavigator();
 
 function StackNav() {
-  const { user } = useAuth();
-	console.log('User in stack:', user);
+  const { user, accessToken } = useAuth();
+	console.log('User in stack:', user, accessToken);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {user ? (
+      {accessToken ? (
         <Stack.Screen name="Home" component={Home} />
       ) : (
 				<Stack.Screen name="Login" component={Login} />

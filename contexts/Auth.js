@@ -7,10 +7,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
+	const [accessToken, setAccessToken] = useState(null);
 
-	const loadUser = () => {
-		const accessToken = AsyncStorage.getItem('accessToken');
-		if (accessToken) {
+	const loadUser = async () => {
+		const oldAccessToken = await AsyncStorage.getItem('accessToken');
+		if (oldAccessToken) {
+			setAccessToken(oldAccessToken);
 			// const userData = await getUser();
 			// setUser({ ...userData });
 		}
@@ -23,31 +25,18 @@ export const AuthProvider = ({ children }) => {
 	const handleLogin = async ({ email, password }) => {
 		const response = await login(email, password);
 		console.log('Response:', response);
-		if (response?.token) {
+		if (response?.access_token) {
 			// const newUser = {
 			// 	...response,
 			// 	token: response?.token,
 			// };
-			// await AsyncStorage.setItem('accessToken', response?.token);
+			await AsyncStorage.setItem('accessToken', response?.access_token);
+			setAccessToken(response?.access_token);
 			// setUser(newUser);
 			// loadUser();
 		}
 		return response;
 	};
-
-	// const handleRegister = async ({ email, password, name }) => {
-	//   const response = await register(email, password, name);
-	//   if (response?.token) {
-	//     const user = {
-	//       ...response,
-	//       token: response?.token,
-	//     };
-	//     await SecureStore.setItemAsync('accessToken', response?.token);
-	//     setUser(user);
-	//     loadUser();
-	//   }
-	//   return response;
-	// };
 
 	const handleLogout = async () => {
 		setUser(null);
@@ -58,10 +47,10 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				user,
+				accessToken,
 				setUser,
 				handleLogin,
 				handleLogout,
-				// handleRegister,
 			}}
 		>
 			{children}
