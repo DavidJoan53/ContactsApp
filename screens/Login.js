@@ -84,9 +84,6 @@ const Login = ({ navigation }) => {
           style: 'cancel',
         },
       ]);
-    } else {
-      // navigation.navigate('BottomNav');
-			console.log('Todo bien');
     }
     setIsLoggingIn(false);
   }
