@@ -13,8 +13,7 @@ const SyncHomeAction = ({ option }) => {
 				left={() => (<View
 						style={styles.icon}
 					>
-						{/* <AntDesign name={option.iconName} size={24} /> */}
-						<AntDesign name="home" size={50} color="blue" />
+						<AntDesign name={option.iconName} size={24} />
 					</View>
 				)}
 			/>

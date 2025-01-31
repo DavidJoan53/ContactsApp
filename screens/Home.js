@@ -1,17 +1,21 @@
 import React from 'react';
-import { StyleSheet, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
+import { StyleSheet, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import AntDesign from '@react-native-vector-icons/ant-design';
 import SyncHomeAction from '../components/SyncHomeAction';
+import { useSync } from '../contexts/Sync';
 
 const Home = () => {
 	const isUpToDate = false;
+
+	const { pagination, progress, handleSyncContacts } = useSync();
 
 	const options = [
 		{
 			id: 'syncAll',
 			label: 'Sync All Contacts',
 			iconName: 'sync',
-			onPress: () => console.log('Sync all'),
+			onPress: handleSyncContacts,
 		},
 		{
 			id: 'syncOutdated',
@@ -44,14 +48,19 @@ const Home = () => {
 						: 'Look like you are desynchronized with some contacts.'
 					}
 					</Text>
-				{/* <AntDesign
+				<AntDesign
 					size={72}
-					name={isUpToDate ? 'checkcircle' : 'clockcircleo'}
+					name={isUpToDate ? 'check' : 'time'}
 					color={isUpToDate ? '#4ade80' : '#fbbf24'}
 					style={{ margin: 'auto'  }}
-				/> */}
+				/>
 			</View>
 			<View style={{ padding: 20, flex: 1, justifyContent: 'space-between' }}>
+				{pagination && (
+					<Text style={styles.progress}>
+						{Math.round(progress * 1000) / 1000}% / 100%
+					</Text>
+				)}
 				<FlatList
 					data={options}
 					renderItem={({item}) => <SyncHomeAction option={item} />}
@@ -71,9 +80,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	headerFont: { fontWeight: '700' },
+	progress: {
+		marginBottom: 10,
+		textAlign: 'center',
+		fontSize: 18,
+		fontWeight: '800',
+	},
 	body: {
 		display: 'flex',
 		paddingHorizontal: 20,
+		marginTop: 16,
 		marginBottom: 20,
 	},
 	logout: {

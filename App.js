@@ -2,17 +2,20 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNav from './navigations/Stack';
+import { PaperProvider } from 'react-native-paper';
 // @import Providers
 import { AuthProvider } from './contexts/Auth';
-import { PaperProvider } from 'react-native-paper';
+import { SyncProvider } from './contexts/Sync';
 
 function App() {
   return (
     <NavigationContainer style={styles.container}>
 			<AuthProvider>
-				<PaperProvider>
-					<StackNav/>
-				</PaperProvider>
+				<SyncProvider>
+					<PaperProvider>
+						<StackNav/>
+					</PaperProvider>
+				</SyncProvider>
 			</AuthProvider>
 		</NavigationContainer>
   );

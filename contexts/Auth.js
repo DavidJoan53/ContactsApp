@@ -13,8 +13,6 @@ export const AuthProvider = ({ children }) => {
 		const oldAccessToken = await AsyncStorage.getItem('accessToken');
 		if (oldAccessToken) {
 			setAccessToken(oldAccessToken);
-			// const userData = await getUser();
-			// setUser({ ...userData });
 		}
 	};
 
@@ -24,16 +22,9 @@ export const AuthProvider = ({ children }) => {
 
 	const handleLogin = async ({ email, password }) => {
 		const response = await login(email, password);
-		console.log('Response:', response);
 		if (response?.access_token) {
-			// const newUser = {
-			// 	...response,
-			// 	token: response?.token,
-			// };
 			await AsyncStorage.setItem('accessToken', response?.access_token);
 			setAccessToken(response?.access_token);
-			// setUser(newUser);
-			// loadUser();
 		}
 		return response;
 	};

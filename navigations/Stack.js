@@ -11,7 +11,6 @@ const Stack = createNativeStackNavigator();
 
 function StackNav() {
   const { user, accessToken } = useAuth();
-	console.log('User in stack:', user, accessToken);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

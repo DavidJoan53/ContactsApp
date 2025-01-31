@@ -1,11 +1,8 @@
 import axiosClient from './client';
 
-export const login = async (email, password) => {
-  try {
-    const response = await axiosClient.post('auth/login', {
-      email,
-      password,
-    });
+export const getContacts = async (params) => {
+	try {
+    const response = await axiosClient.get(`user/contacts?${new URLSearchParams(params)}`);
     return response.data;
   } catch (error) {
     return { error: true, message: error?.response?.data?.message ?? '' };
